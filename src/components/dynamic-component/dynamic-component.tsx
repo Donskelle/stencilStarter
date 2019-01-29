@@ -1,11 +1,11 @@
 import { Component, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'my-component',
+  tag: 'dynamic-component',
   shadow: false
 })
-export class MyComponent {
-  @Prop() tag: string;
+export class DynamicComponent {
+  @Prop() tag: string = 'div';
   @Prop() props: object = {
     class: 'test',
     classdwqe: 'test',

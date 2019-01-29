@@ -12,11 +12,11 @@ import '@stencil/core';
 
 export namespace Components {
 
-  interface MyComponent {
+  interface DynamicComponent {
     'props': object;
     'tag': string;
   }
-  interface MyComponentAttributes extends StencilHTMLAttributes {
+  interface DynamicComponentAttributes extends StencilHTMLAttributes {
     'props'?: object;
     'tag'?: string;
   }
@@ -24,26 +24,26 @@ export namespace Components {
 
 declare global {
   interface StencilElementInterfaces {
-    'MyComponent': Components.MyComponent;
+    'DynamicComponent': Components.DynamicComponent;
   }
 
   interface StencilIntrinsicElements {
-    'my-component': Components.MyComponentAttributes;
+    'dynamic-component': Components.DynamicComponentAttributes;
   }
 
 
-  interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {}
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
+  interface HTMLDynamicComponentElement extends Components.DynamicComponent, HTMLStencilElement {}
+  var HTMLDynamicComponentElement: {
+    prototype: HTMLDynamicComponentElement;
+    new (): HTMLDynamicComponentElement;
   };
 
   interface HTMLElementTagNameMap {
-    'my-component': HTMLMyComponentElement
+    'dynamic-component': HTMLDynamicComponentElement
   }
 
   interface ElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
+    'dynamic-component': HTMLDynamicComponentElement;
   }
 
 
