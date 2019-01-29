@@ -10,7 +10,7 @@
 | Property | Attribute | Description | Type     | Default                                                         |
 | -------- | --------- | ----------- | -------- | --------------------------------------------------------------- |
 | `props`  | --        |             | `object` | `{     class: 'test',     classdwqe: 'test',     id: '15',   }` |
-| `tag`    | `tag`     |             | `string` | `undefined`                                                     |
+| `tag`    | `tag`     |             | `string` | `'div'`                                                         |
 
 
 ----------------------------------------------
