@@ -1,20 +1,21 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop } from "@stencil/core";
 
 @Component({
-  tag: 'dynamic-component',
+  tag: "dynamic-component",
   shadow: false
 })
 export class DynamicComponent {
-  @Prop() tag: string = 'div';
-  @Prop() props: object = {
-    class: 'test',
-    classdwqe: 'test',
-    id: '15',
-  };
+  @Prop() tag: string = "div";
+  @Prop() props: object = {};
 
   render() {
     const CustomTag = `${this.tag}`;
 
-    return <CustomTag {...this.props}>Hello, World! I'm using VDOM with dynamic created Tag {this.tag}</CustomTag>;
+    return (
+      <CustomTag {...this.props}>
+        {this.props && this.props.arr && this.props.arr.map((name, i) => <li key={i}>{name}</li>)}
+        <slot />
+      </CustomTag>
+    );
   }
 }

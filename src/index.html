@@ -1,15 +1,82 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-  <title>Stencil Component Starter</title>
-  <script src="/build/dynamiccomponent.js"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Stencil Component Starter</title>
+    <script src="/build/dynamiccomponent.js"></script>
+    <script src="https://rawgit.com/Marak/faker.js/master/examples/browser/js/faker.js"></script>
+  </head>
+  <body>
+    <dynamic-component id="dynamic" tag="span">
+      Iam already a child
+    </dynamic-component>
+    <button href="#" id="addArr">+</button>
+    <button href="#" id="rmArr">-</button>
+    <button href="#" id="rerollTag">Reroll Tag</button>
+    <script>
+      const getCalcTime = (f, ...args) => {
+        const start = performance.now();
+        f(...args);
+        const end = performance.now();
+        return end - start;
+      };
 
-</head>
-<body>
+      const createName = () => {
+        return faker.name.findName() + ", " + faker.name.jobTitle();
+      };
+      const createArr = (n = 5) => [...Array(n)].map(createName);
+      const addElem = () => {
+        const { arr, ...rest } = dynamic.props;
+        arr.push(createName());
+        dynamic.props = {
+          ...rest,
+          arr
+        };
+      };
+      const rmElem = () => {
+        const { arr, ...rest } = dynamic.props;
+        if (arr && arr.length) arr.pop();
+        dynamic.props = {
+          ...rest,
+          arr
+        };
+      };
+      const reroll = () => {
+        let tag;
+        switch (parseInt(Math.random() * 4)) {
+          case 0:
+            tag = "h1";
+            break;
+          case 1:
+            tag = "span";
+            break;
+          case 2:
+            tag = "p";
+            break;
+          case 3:
+            tag = "img";
+            break;
+          default:
+            tag = "h5";
+            break;
+        }
+        dynamic.tag = tag;
+      };
 
-  <dynamic-component tag="span"></dynamic-component>
+      (init = () => {
+        dynamic.props = {
+          onClick: () => console.log('events as props'),
+          arr: createArr()
+        };
 
-</body>
+        rerollTag.addEventListener("click", reroll);
+        addArr.addEventListener("click", addElem);
+        rmArr.addEventListener("click", rmElem);
+      })();
+    </script>
+  </body>
 </html>
