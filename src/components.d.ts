@@ -8,16 +8,20 @@
 import '@stencil/core';
 
 
+import {
+  PossibleProps,
+} from './components/dynamic-component/interfaceProp';
 
 
 export namespace Components {
 
   interface DynamicComponent {
-    'props': object;
+    'props': PossibleProps;
     'tag': string;
   }
   interface DynamicComponentAttributes extends StencilHTMLAttributes {
-    'props'?: object;
+    'onUpdateComp'?: (event: CustomEvent) => void;
+    'props'?: PossibleProps;
     'tag'?: string;
   }
 }

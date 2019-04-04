@@ -11,24 +11,31 @@
     <script src="https://rawgit.com/Marak/faker.js/master/examples/browser/js/faker.js"></script>
   </head>
   <body>
-    <dynamic-component id="dynamic" tag="span">
-      Iam already a child
-    </dynamic-component>
     <button href="#" id="addArr">+</button>
     <button href="#" id="rmArr">-</button>
     <button href="#" id="rerollTag">Reroll Tag</button>
+    <dynamic-component id="dynamic" tag="span">
+      <p>Child</p>
+    </dynamic-component>
     <script>
       const getCalcTime = (f, ...args) => {
-        const start = performance.now();
-        f(...args);
-        const end = performance.now();
-        return end - start;
+        requestAnimationFrame(async () => {
+          const start = performance.now();
+          // performance.mark('start');
+          f(...args);
+          await new Promise(resolve =>
+            dynamic.addEventListener("updateComp", resolve)
+          );
+          // performance.mark('end');
+          // performance.measure('time', 'start', 'end');
+          const end = performance.now();
+          console.log(end - start);
+        });
       };
 
-      const createName = () => {
-        return faker.name.findName() + ", " + faker.name.jobTitle();
-      };
-      const createArr = (n = 5) => [...Array(n)].map(createName);
+      const createName = () =>
+        faker.name.findName() + ", " + faker.name.jobTitle();
+      const createArr = (n = 1500) => [...Array(n)].map(createName);
       const addElem = () => {
         const { arr, ...rest } = dynamic.props;
         arr.push(createName());
@@ -47,7 +54,7 @@
       };
       const reroll = () => {
         let tag;
-        switch (parseInt(Math.random() * 4)) {
+        switch (parseInt(Math.random() * 5)) {
           case 0:
             tag = "h1";
             break;
@@ -69,13 +76,13 @@
 
       (init = () => {
         dynamic.props = {
-          onClick: () => console.log('events as props'),
+          onClick: () => console.log("events as props"),
           arr: createArr()
         };
 
-        rerollTag.addEventListener("click", reroll);
-        addArr.addEventListener("click", addElem);
-        rmArr.addEventListener("click", rmElem);
+        rerollTag.addEventListener("click", () => getCalcTime(reroll));
+        addArr.addEventListener("click", () => getCalcTime(addElem));
+        rmArr.addEventListener("click", () => getCalcTime(rmElem));
       })();
     </script>
   </body>

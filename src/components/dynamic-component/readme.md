@@ -7,10 +7,17 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default                                                         |
-| -------- | --------- | ----------- | -------- | --------------------------------------------------------------- |
-| `props`  | --        |             | `object` | `{     class: 'test',     classdwqe: 'test',     id: '15',   }` |
-| `tag`    | `tag`     |             | `string` | `'div'`                                                         |
+| Property | Attribute | Description | Type            | Default     |
+| -------- | --------- | ----------- | --------------- | ----------- |
+| `props`  | --        |             | `PossibleProps` | `undefined` |
+| `tag`    | `tag`     |             | `string`        | `"div"`     |
+
+
+## Events
+
+| Event        | Description | Type                |
+| ------------ | ----------- | ------------------- |
+| `updateComp` |             | `CustomEvent<void>` |
 
 
 ----------------------------------------------

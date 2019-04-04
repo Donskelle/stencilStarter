@@ -1,4 +1,5 @@
-import { Component, Prop } from "@stencil/core";
+import { Component, Prop, EventEmitter, Event } from "@stencil/core";
+import { PossibleProps } from "./interfaceProp";
 
 @Component({
   tag: "dynamic-component",
@@ -6,14 +7,20 @@ import { Component, Prop } from "@stencil/core";
 })
 export class DynamicComponent {
   @Prop() tag: string = "div";
-  @Prop() props: object = {};
+  @Prop() props: PossibleProps;
+  @Event() updateComp: EventEmitter;
+
+  componentDidUpdate() {
+    this.updateComp.emit();
+  }
 
   render() {
     const CustomTag = `${this.tag}`;
+    const { arr, ...rest } = this.props;
 
     return (
-      <CustomTag {...this.props}>
-        {this.props && this.props.arr && this.props.arr.map((name, i) => <li key={i}>{name}</li>)}
+      <CustomTag {...rest}>
+        {arr && arr.map((name, i) => <li key={i}>{name}</li>)}
         <slot />
       </CustomTag>
     );
